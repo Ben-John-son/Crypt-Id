@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] });
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={inter.className} style={{ backgroundColor: 'black' }}>
         <ClientProvider>{children}</ClientProvider>
       </body>
     </html>
@@ -26,7 +26,7 @@ export const generateMetadata = async ({ params }) => {
   const { slug } = params; // Example of accessing dynamic route params
 
   return {
-    title: `TEMPLATE - ${slug || 'HOME'}`, // Dynamically set the title using route parameters
+    title: `Crypt-Id - ${slug || 'HOME'}`, // Dynamically set the title using route parameters
     description: `This is a dynamically generated description for ${slug}.`, // Dynamic description
     // Add other metadata fields as needed, like keywords, open graph tags, etc.
     keywords: [`${slug}`, 'dynamic', 'page'],

@@ -2,24 +2,35 @@
 import React from 'react';
 import Link from 'next/link';
 import { Navbar, Container, Nav, Button } from 'react-bootstrap';
+import { Creepster } from 'next/font/google';
 import { signOut } from '../utils/auth';
+
+const creep = Creepster({
+  weight: '400',
+  subsets: ['latin'],
+  size: '90px',
+  outline: '6px solid black',
+});
 
 export default function NavBar() {
   return (
-    <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+    <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: 'rgb(76 204 106)', opacity: '.7' }}>
       <Container>
-        <Link passHref href="/" className="navbar-brand">
-          Simply Books
+        <Link id="creepy" passHref href="/" className={creep.className} style={{ fontSize: '35px', color: 'rgb(220, 88, 40)', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none' }}>
+          Crypt-Id
         </Link>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
-            <Link className="nav-link" href="/">
-              Books
+            <Link className="nav-link" href="/Cryptids" style={{ marginLeft: '100px', fontFamily: 'courier', fontSize: '30px', fontWeight: 'bold', color: 'rgb(220, 88, 40)', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black' }}>
+              Explore
             </Link>
-            <Link className="nav-link" href="/authors">
-              Authors
+            <Link className="nav-link" href="/Contributions" style={{ marginLeft: '100px', fontFamily: 'courier', fontSize: '30px', fontWeight: 'bold', color: 'rgb(220, 88, 40)', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black' }}>
+              Contributions
+            </Link>
+            <Link className="nav-link" href="/HOF" style={{ marginLeft: '100px', fontFamily: 'courier', fontSize: '30px', fontWeight: 'bold', color: 'rgb(220, 88, 40)', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black' }}>
+              Hall of Fame
             </Link>
           </Nav>
           <Button variant="danger" onClick={signOut}>
