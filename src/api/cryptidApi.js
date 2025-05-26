@@ -99,6 +99,27 @@ const getCryptidSightings = (firebaseKey) =>
       .then((data) => resolve(Object.values(data)))
       .catch(reject);
   });
+
+const cryptidsByState = (state) =>
+  new Promise((resolve, reject) => {
+    fetch(`${endpoint}/cryptids.json`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data) {
+          resolve([]);
+        } else {
+          const filtered = Object.values(data).filter((cryptid) => cryptid.states && cryptid.states[state]);
+          resolve(filtered);
+        }
+      })
+      .catch(reject);
+  });
+
 // const getBooksByAuthor = (firebaseKey) =>
 //   new Promise((resolve, reject) => {
 //     fetch(`${endpoint}/books.json?orderBy="author_id"&equalTo="${firebaseKey}"`, {
@@ -128,4 +149,4 @@ const getCryptidSightings = (firebaseKey) =>
 //       .catch(reject);
 //   });
 
-export { getCryptids, createCryptid, deleteCryptid, getSingleCryptid, updateCryptid, userCryptids, getCryptidSightings };
+export { getCryptids, createCryptid, deleteCryptid, getSingleCryptid, updateCryptid, userCryptids, getCryptidSightings, cryptidsByState };
