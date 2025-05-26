@@ -3,8 +3,9 @@
 import * as d3 from 'd3';
 import { feature, mesh } from 'topojson-client';
 import { useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 
-export default function UsMap() {
+export default function UsMap({ onStateClick }) {
   const svgRef = useRef();
 
   useEffect(() => {
@@ -31,43 +32,32 @@ export default function UsMap() {
 
       const states = g
         .append('g')
-        .attr('fill', '#444')
+        .attr('fill', 'rgb(76 204 106)')
         .attr('cursor', 'pointer')
         .selectAll('path')
         .data(stateFeatures)
         .join('path')
         .attr('d', path)
-        .on('click', (event) => {
-          // const [[x0, y0], [x1, y1]] = path.bounds(d);
+        .on('click', function (event, d) {
+          // const [[x0, y0], [x1, y1]] = path.bounds(d);if MAP IS NOT WORKING CORRECTLY, UNCOMMENT THIS SECTION!!!!!!!!!!
           event.stopPropagation();
 
-          // Reset all state fill
-          states.transition().style('fill', '#444');
+          // Notify parent
+          onStateClick(d.properties.name);
 
           // Highlight selected state
-          d3.select(this).transition().style('fill', 'red');
-
-          // Zoom to the selected state
-          // svg.transition().duration(750).call(
-          //   zoom.transform,
-          //   d3.zoomIdentity
-          //     .translate(width / 2, height / 2)
-          //     .scale(Math.min(8, 0.9 / Math.max((x1 - x0) / width, (y1 - y0) / height)))
-          //     .translate(-(x0 + x1) / 2, -(y0 + y1) / 2),
-          //   d3.pointer(event, svg.node()),
-          // );
+          states.transition().style('fill', ' rgb(23, 113, 44)');
+          d3.select(this).transition().style('fill', 'rgb(220, 88, 40)');
         });
 
       states.append('title').text((d) => d.properties.name);
 
-      // Draw state borders
       g.append('path')
         .attr('fill', 'none')
         .attr('stroke', 'white')
         .attr('stroke-linejoin', 'round')
         .attr('d', path(mesh(us, us.objects.states, (a, b) => a !== b)));
 
-      // Reset zoom on empty space click
       svg.on('click', () => {
         states.transition().style('fill', '#444');
         svg
@@ -77,11 +67,14 @@ export default function UsMap() {
       });
     });
 
-    // ✅ Clean up on unmount
     return () => {
       d3.select(svgRef.current).selectAll('*').remove();
     };
   }, []);
 
-  return <svg ref={svgRef} />;
+  return <svg ref={svgRef} style={{ backgroundColor: 'black' }} />;
 }
+
+UsMap.propTypes = {
+  onStateClick: PropTypes.func.isRequired,
+};

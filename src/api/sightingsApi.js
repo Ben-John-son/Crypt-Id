@@ -3,9 +3,9 @@ import { clientCredentials } from '../utils/client';
 
 const endpoint = clientCredentials.databaseURL;
 
-const getCryptids = () =>
+const getSightings = () =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/cryptids.json"`, {
+    fetch(`${endpoint}/sightings.json`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -16,9 +16,9 @@ const getCryptids = () =>
       .catch(reject);
   });
 
-const userCryptids = (uid) =>
+const userSightings = (uid) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/cryptids.json?orderBy="uid"&equalTo="${uid}"`, {
+    fetch(`${endpoint}/sightings.json?orderBy="uid"&equalTo="${uid}"`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -30,9 +30,9 @@ const userCryptids = (uid) =>
   });
 
 // TODO: DELETE BOOK
-const deleteCryptid = (firebaseKey) =>
+const deleteSighting = (firebaseKey) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/cryptids/${firebaseKey}.json`, {
+    fetch(`${endpoint}/sightings/${firebaseKey}.json`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -44,9 +44,9 @@ const deleteCryptid = (firebaseKey) =>
   });
 
 // TODO: GET SINGLE BOOK
-const getSingleCryptid = (firebaseKey) =>
+const getSingleSighting = (firebaseKey) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/cryptids/${firebaseKey}.json`, {
+    fetch(`${endpoint}/sightings/${firebaseKey}.json`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -58,9 +58,9 @@ const getSingleCryptid = (firebaseKey) =>
   });
 
 // TODO: CREATE BOOK
-const createCryptid = (payload) =>
+const createSighting = (payload) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/cryptids.json`, {
+    fetch(`${endpoint}/sightings.json`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -73,9 +73,9 @@ const createCryptid = (payload) =>
   });
 
 // TODO: UPDATE BOOK
-const updateCryptid = (payload) =>
+const updateSighting = (payload) =>
   new Promise((resolve, reject) => {
-    fetch(`${endpoint}/cryptids/${payload.firebaseKey}.json`, {
+    fetch(`${endpoint}/sightings/${payload.firebaseKey}.json`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
@@ -116,4 +116,4 @@ const updateCryptid = (payload) =>
 //       .catch(reject);
 //   });
 
-export { getCryptids, createCryptid, deleteCryptid, getSingleCryptid, updateCryptid, userCryptids };
+export { getSightings, createSighting, deleteSighting, updateSighting, getSingleSighting, userSightings };
