@@ -22,7 +22,7 @@ const initialState = {
   state: '',
 };
 
-export default function SightingsForm({ obj = initialState }) {
+export default function SightingsForm({ obj = initialState, params }) {
   // eslint-disable-next-line max-len
   const states = [
     'Alabama',
@@ -112,9 +112,9 @@ export default function SightingsForm({ obj = initialState }) {
     } else {
       const payload = { ...formInput, uid: user.uid };
       createSighting(payload).then(({ name }) => {
-        const patchPayload = { firebaseKey: name };
+        const patchPayload = { firebaseKey: name, cryptidKey: params };
         updateSighting(patchPayload).then(() => {
-          router.push('/Sightings');
+          router.back();
         });
       });
     }
@@ -129,12 +129,30 @@ export default function SightingsForm({ obj = initialState }) {
         </Form.Group>
 
         <Form.Group as={Col} controlId="formGridPassword">
-          <Form.Label style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>State</Form.Label>
+          <Form.Label value={formInput.state} style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>
+            State
+          </Form.Label>
           <FormGroup>
-            <Form.Select aria-label="Default select example" style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier', backgroundColor: 'rgb(220, 88, 40)' }}>
-              {states.map((state) => (
-                <option value={formInput.state} style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier', backgroundColor: 'rgb(220, 88, 40)' }}>
-                  {state}
+            <Form.Select
+              name="state"
+              value={formInput.state}
+              onChange={handleChange}
+              aria-label="State select"
+              style={{
+                color: 'rgb(76 204 106)',
+                fontWeight: 'bold',
+                fontSize: '25px',
+                WebkitTextStroke: '1px',
+                WebkitTextStrokeColor: 'black',
+                textDecoration: 'none',
+                fontFamily: 'courier',
+                backgroundColor: 'rgb(220, 88, 40)',
+              }}
+            >
+              <option value="">Select a state</option>
+              {states.map((stateName) => (
+                <option key={stateName} value={stateName}>
+                  {stateName}
                 </option>
               ))}
             </Form.Select>
@@ -143,7 +161,7 @@ export default function SightingsForm({ obj = initialState }) {
       </Row>
 
       <Form.Group className="mb-3" controlId="formGridAddress1">
-        <Form.Label style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>Cryptid Description</Form.Label>
+        <Form.Label style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>Sighting Description</Form.Label>
         <Form.Control onChange={handleChange} name="description" value={formInput.description} placeholder="It was..." style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', opacity: '.8', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }} />
       </Form.Group>
 

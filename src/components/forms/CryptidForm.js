@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
@@ -9,7 +9,7 @@ import Select from 'react-select';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
-import { useAuth } from '../../utils/context/authContext'; // ✅ named import
+import { useAuth } from '../../utils/context/authContext';
 
 import { createCryptid, updateCryptid } from '../../api/cryptidApi';
 
@@ -21,7 +21,6 @@ const initialState = {
 };
 
 export default function CryptidForm({ obj = initialState }) {
-  // eslint-disable-next-line max-len
   const states = [
     'Alabama',
     'Alaska',
@@ -83,32 +82,43 @@ export default function CryptidForm({ obj = initialState }) {
     'Wisconsin',
     'Wyoming',
   ];
-  const [formInput, setFormInput] = useState(obj);
+
+  const [formInput, setFormInput] = useState(initialState);
   const router = useRouter();
   const { user } = useAuth();
 
+  // ✅ Normalize `states` in useEffect
+  useEffect(() => {
+    // eslint-disable-next-line no-nested-ternary
+    const normalizedStates = obj?.states ? (Array.isArray(obj.states) ? obj.states : Object.keys(obj.states)) : [];
+
+    setFormInput({ ...initialState, ...obj, states: normalizedStates });
+  }, [obj]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormInput((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setFormInput((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleStateChange = (stateOptions) => {
-    // Extract just the values (state names) from the select options
-    const selectedStates = stateOptions ? stateOptions.map((option) => option.value) : [];
+  const handleStateChange = (selectedOptions) => {
+    const selectedStates = selectedOptions ? selectedOptions.map((option) => option.value) : [];
     setFormInput((prev) => ({ ...prev, states: selectedStates }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    // Normalize the states array to ensure it's an array of strings
+    const stateArray = Array.isArray(formInput.states) ? formInput.states.map((state) => (typeof state === 'string' ? state : state.value)) : [];
+
+    const stateObj = Object.fromEntries(stateArray.map((state) => [state, true]));
+
+    const payload = { ...formInput, states: stateObj };
+
     if (obj.firebaseKey) {
-      updateCryptid(formInput).then(() => router.push(`/Cryptids/${obj.firebaseKey}`));
+      updateCryptid(payload).then(() => router.push('/Cryptids'));
     } else {
-      const stateObj = Object.fromEntries(formInput.states.map((state) => [state, true]));
-      const payload = { ...formInput, states: stateObj, uid: user.uid };
-      createCryptid(payload).then(({ name }) => {
+      createCryptid({ ...payload, uid: user.uid }).then(({ name }) => {
         const patchPayload = { firebaseKey: name };
         updateCryptid(patchPayload).then(() => {
           router.push('/Cryptids');
@@ -116,37 +126,90 @@ export default function CryptidForm({ obj = initialState }) {
       });
     }
   };
+  const labelStyle = {
+    color: 'rgb(76 204 106)',
+    fontWeight: 'bold',
+    fontSize: '25px',
+    WebkitTextStroke: '1px',
+    WebkitTextStrokeColor: 'black',
+    textDecoration: 'none',
+    fontFamily: 'courier',
+  };
+
+  const inputStyle = {
+    backgroundColor: 'rgb(220, 88, 40)',
+    border: 'none',
+    opacity: '.8',
+    color: 'rgb(76 204 106)',
+    fontWeight: 'bold',
+    fontSize: '25px',
+    WebkitTextStroke: '1px',
+    WebkitTextStrokeColor: 'black',
+    textDecoration: 'none',
+    fontFamily: 'courier',
+  };
+
+  const buttonStyle = {
+    backgroundColor: 'rgb(220, 88, 40)',
+    border: 'none',
+    color: 'rgb(76 204 106)',
+    fontWeight: 'bold',
+    fontSize: '25px',
+    WebkitTextStroke: '1px',
+    WebkitTextStrokeColor: 'black',
+    textDecoration: 'none',
+    fontFamily: 'courier',
+  };
 
   return (
     <Form onSubmit={handleSubmit}>
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridEmail">
-          <Form.Label style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>Cryptid Name</Form.Label>
-          <Form.Control onChange={handleChange} type="text" placeholder="" name="cryptidName" value={formInput.cryptidName} style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', opacity: '.8', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }} />
+          <Form.Label style={labelStyle}>Cryptid Name</Form.Label>
+          <Form.Control onChange={handleChange} type="text" name="cryptidName" value={formInput.cryptidName} style={inputStyle} />
         </Form.Group>
 
         <Form.Group as={Col} controlId="formGridPassword">
-          <Form.Label style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>Photo Evidence</Form.Label>
-          <Form.Control onChange={handleChange} type="text" placeholder="" name="image" value={formInput.image} style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', opacity: '.8', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }} />
+          <Form.Label style={labelStyle}>Photo Evidence</Form.Label>
+          <Form.Control onChange={handleChange} type="text" name="image" value={formInput.image} style={inputStyle} />
         </Form.Group>
       </Row>
 
       <Form.Group className="mb-3" controlId="formGridAddress1">
-        <Form.Label style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>Cryptid Description</Form.Label>
-        <Form.Control onChange={handleChange} name="description" value={formInput.description} placeholder="It was..." style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', opacity: '.8', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }} />
+        <Form.Label style={labelStyle}>Cryptid Description</Form.Label>
+        <Form.Control onChange={handleChange} name="description" value={formInput.description} placeholder="It was..." style={inputStyle} />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formGridStates">
-        <Form.Label style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>States Sighted In</Form.Label>
-        <Select isMulti name="states" options={states.map((state) => ({ value: state, label: state }))} className="basic-multi-select" classNamePrefix="select" onChange={handleStateChange} style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', opacity: '.8', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }} value={formInput.states.map((state) => ({ value: state, label: state }))} />
+        <Form.Label style={labelStyle}>States Sighted In</Form.Label>
+        <Select
+          isMulti
+          name="states"
+          options={states.map((state) => ({ value: state, label: state }))}
+          className="basic-multi-select"
+          classNamePrefix="select"
+          onChange={handleStateChange}
+          value={(formInput.states || []).map((state) => ({
+            value: state,
+            label: state,
+          }))}
+          styles={{
+            control: (provided) => ({
+              ...provided,
+              backgroundColor: 'rgb(220, 88, 40)',
+              border: 'none',
+              opacity: '.8',
+              color: 'rgb(76 204 106)',
+            }),
+            multiValueLabel: (styles) => ({
+              ...styles,
+              color: 'rgb(76 204 106)',
+            }),
+          }}
+        />
       </Form.Group>
 
-      {/* <Row>
-        <Form.Group className="mb-3" id="formGridCheckbox">
-          <Form.Check type="checkbox" label="Check me out" />
-        </Form.Group>
-      </Row> */}
-      <Button variant="primary" type="submit" style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>
+      <Button variant="primary" type="submit" style={buttonStyle}>
         Submit
       </Button>
     </Form>
@@ -158,7 +221,7 @@ CryptidForm.propTypes = {
     cryptidName: PropTypes.string,
     image: PropTypes.string,
     description: PropTypes.string,
-    states: PropTypes.arrayOf(PropTypes.string),
-    firebaseKey: PropTypes.string, // optional, used to determine edit mode
+    states: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.string), PropTypes.object]),
+    firebaseKey: PropTypes.string,
   }),
 };

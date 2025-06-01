@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Button, Image, FormGroup, Form, Row, Col } from 'react-bootstrap';
 // import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
+import Link from 'next/link';
 import { getCryptidSightings } from '../../../api/cryptidApi';
 import { createSighting, updateSighting } from '../../../api/sightingsApi';
 // import SightingsForm from '../../../components/forms/SightingsForm';
@@ -135,9 +136,9 @@ export default function SightingsByCryptid({ params, obj = initialState }) {
       <Image src="/sightingsPage2.png" alt="Bigfoot" fill style={{ objectFit: 'cover', zIndex: -1, position: 'absolute' }} priority />
 
       <h1 style={{ fontFamily: 'courier', color: 'rgb(220, 88, 40)', textAlign: 'center', marginTop: '5%', fontWeight: 'bold' }}>Sightings</h1>
-      <Button variant="primary" onClick={handleShow} style={{ width: '10%' }}>
-        Add Sighting
-      </Button>
+      <Link href={`/Sightings/new/${firebaseKey}`} passHref>
+        <Button variant="info">Add Sighting</Button>
+      </Link>
 
       <div className="sightingsCards" style={{ marginTop: '2%', display: 'flex', flexDirection: 'row', justifyContent: 'center', justifyItems: 'center', flexWrap: 'wrap', gap: '2%', marginBottom: '2%' }}>
         {sightings.length ? sightings.map((sighting) => <SightingsCard key={sighting.firebaseKey} sightObj={sighting} onEdit={handleShow} />) : <h2>No sightings added yet</h2>}

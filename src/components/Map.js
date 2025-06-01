@@ -17,15 +17,15 @@ export default function UsMap({ onStateClick }) {
     const g = svg.append('g');
     const path = d3.geoPath();
 
-    const zoom = d3
-      .zoom()
-      .scaleExtent([1, 8])
-      .on('zoom', (event) => {
-        g.attr('transform', event.transform);
-        g.attr('stroke-width', 1 / event.transform.k);
-      });
+    // const zoom = d3
+    //   .zoom()
+    //   .scaleExtent([1, 8])
+    //   .on('zoom', (event) => {
+    //     g.attr('transform', event.transform);
+    //     g.attr('stroke-width', 1 / event.transform.k);
+    //   });
 
-    svg.call(zoom);
+    // svg.call(zoom);
 
     d3.json('/us.json').then((us) => {
       const stateFeatures = feature(us, us.objects.states).features;
@@ -58,13 +58,13 @@ export default function UsMap({ onStateClick }) {
         .attr('stroke-linejoin', 'round')
         .attr('d', path(mesh(us, us.objects.states, (a, b) => a !== b)));
 
-      svg.on('click', () => {
-        states.transition().style('fill', '#444');
-        svg
-          .transition()
-          .duration(750)
-          .call(zoom.transform, d3.zoomIdentity, d3.zoomTransform(svg.node()).invert([width / 2, height / 2]));
-      });
+      // svg.on('click', () => {
+      //   states.transition().style('fill', '#444');
+      //   svg
+      //     .transition()
+      //     .duration(750)
+      //     .call(zoom.transform, d3.zoomIdentity, d3.zoomTransform(svg.node()).invert([width / 2, height / 2]));
+      // });
     });
 
     return () => {

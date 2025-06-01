@@ -16,7 +16,7 @@ export default function EditSightingPage({ params }) {
 
   return (
     <div>
-      <Image src="/formImageWoods.jpg" />
+      <Image src="/formImageWoods.jpg" fill style={{ objectFit: 'cover', zIndex: -1, position: 'absolute' }} priority />
       <SightingsForm obj={editItem} />
     </div>
   );
