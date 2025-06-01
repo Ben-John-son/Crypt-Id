@@ -2,12 +2,16 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
-import { deleteCryptid } from '../api/cryptidApi';
+import Link from 'next/link';
+import { useAuth } from '../utils/context/authContext';
+import deleteCryptidSightings from '../api/mergedData';
 
 export default function CryptidCard({ cryptObj, onUpdate }) {
+  const { user } = useAuth();
+
   const deleteThisCryptid = () => {
     if (window.confirm(`Delete ${cryptObj.cryptidName}?`)) {
-      deleteCryptid(cryptObj.firebaseKey).then(() => onUpdate());
+      deleteCryptidSightings(cryptObj.firebaseKey).then(() => onUpdate());
     }
   };
   return (
@@ -23,12 +27,18 @@ export default function CryptidCard({ cryptObj, onUpdate }) {
           Sightings
         </Card.Link>
         <br />
-        <Button className="cardBtn" style={{ marginTop: '20px' }}>
-          EDIT
-        </Button>
-        <Button className="cardBtnDelete" style={{ marginTop: '20px', marginLeft: '25px' }} onClick={deleteThisCryptid}>
-          DELETE
-        </Button>
+        {user.uid === cryptObj.uid && (
+          <Link href={`/Cryptids/edit/${cryptObj.firebaseKey}`}>
+            <Button className="cardBtn" style={{ marginTop: '20px' }}>
+              EDIT
+            </Button>
+          </Link>
+        )}
+        {user.uid === cryptObj.uid && (
+          <Button className="cardBtnDelete" style={{ marginTop: '20px', marginLeft: '25px' }} onClick={deleteThisCryptid}>
+            DELETE
+          </Button>
+        )}
       </Card.Body>
     </Card>
   );
@@ -40,6 +50,7 @@ CryptidCard.propTypes = {
     description: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     firebaseKey: PropTypes.string.isRequired,
+    uid: PropTypes.string,
   }).isRequired,
   onUpdate: PropTypes.func.isRequired,
 };

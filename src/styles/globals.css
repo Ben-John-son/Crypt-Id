@@ -12,7 +12,11 @@ color: rgb(188, 10, 188) !important;
 
 #creepy:hover {
 color: purple;
-color:rgba(195, 195, 194, 0.958)
+
+}
+
+.nav-link:active {
+  color: purple;
 }
 
 
@@ -271,6 +275,7 @@ color:rgba(195, 195, 194, 0.958)
   .cardBtn {
     padding: 0.25em 0.75em;
   }
+  
 }
 
 .cardBtnDelete {
@@ -281,6 +286,7 @@ color:rgba(195, 195, 194, 0.958)
   text-transform: uppercase;
   color: rgb(154, 70, 10);
   background-color: black;
+ 
   cursor: pointer;
   border: 3px solid;
   padding: 0.25em 0.5em;

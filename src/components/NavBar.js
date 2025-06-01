@@ -13,9 +13,16 @@ const creep = Creepster({
 });
 
 export default function NavBar() {
+  // const [searchTerm, setSearchTerm] = useState('')
+
+  // const handleChange = (e) => {
+  //   setSearchTerm(e.target.value);
+  //   onSearch(e.target.value)
+  // }
+
   return (
     <Navbar collapseOnSelect expand="lg" style={{ backgroundColor: 'rgb(76 204 106)', opacity: '.7' }}>
-      <Container>
+      <Container style={{ marginLeft: '3%' }}>
         <Link id="creepy" passHref href="/" className={creep.className} style={{ fontSize: '35px', color: 'rgb(220, 88, 40)', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none' }}>
           Crypt-Id
         </Link>
@@ -23,14 +30,17 @@ export default function NavBar() {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
-            <Link className="nav-link" href="/Cryptids" style={{ marginLeft: '100px', fontFamily: 'courier', fontSize: '30px', fontWeight: 'bold', color: 'rgb(220, 88, 40)', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black' }}>
+            <Link className="nav-link" href="/Cryptids" style={{ marginLeft: '140px', fontFamily: 'courier', fontSize: '30px', fontWeight: 'bold', color: 'rgb(220, 88, 40)', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black' }}>
               Explore
             </Link>
-            <Link className="nav-link" href="/Contributions" style={{ marginLeft: '100px', fontFamily: 'courier', fontSize: '30px', fontWeight: 'bold', color: 'rgb(220, 88, 40)', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black' }}>
+            <Link className="nav-link" href="/Contributions" style={{ marginLeft: '70px', fontFamily: 'courier', fontSize: '30px', fontWeight: 'bold', color: 'rgb(220, 88, 40)', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black' }}>
               Contributions
             </Link>
-            <Link className="nav-link" href="/HOF" style={{ marginLeft: '100px', fontFamily: 'courier', fontSize: '30px', fontWeight: 'bold', color: 'rgb(220, 88, 40)', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black' }}>
+            <Link className="nav-link" href="/HOF" style={{ marginLeft: '70px', fontFamily: 'courier', fontSize: '30px', fontWeight: 'bold', color: 'rgb(220, 88, 40)', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black' }}>
               Hall of Fame
+            </Link>
+            <Link href="#">
+              <input type="text" style={{ width: '10rem', marginLeft: '20px', marginTop: '8%' }} />
             </Link>
           </Nav>
           <Button variant="danger" onClick={signOut}>

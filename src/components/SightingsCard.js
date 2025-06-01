@@ -1,8 +1,12 @@
+import Link from 'next/link';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
+import { useAuth } from '../utils/context/authContext';
 
-export default function SightingsCard({ sightObj, onEdit }) {
+export default function SightingsCard({ sightObj }) {
+  const { user } = useAuth();
+
   return (
     <div>
       <Card style={{ width: '20rem', backgroundColor: 'black ', height: '65vh', border: '2px solid rgb(220, 88, 40)', marginBottom: '2rem' }}>
@@ -12,11 +16,13 @@ export default function SightingsCard({ sightObj, onEdit }) {
           <Card.Text style={{ fontSize: '11px', fontFamily: 'courier', color: 'rgb(76 204 106)' }}>{sightObj.city}</Card.Text>
           <Card.Text style={{ fontSize: '11px', fontFamily: 'courier', color: 'rgb(76 204 106)' }}>{sightObj.state}</Card.Text>
           <br />
-
-          <Button onClick={() => onEdit(sightObj)} className="cardBtn" style={{ marginTop: '20px' }}>
-            EDIT
-          </Button>
-
+          {user.uid === sightObj.uid && (
+            <Link href={`/Sightings/edit/${sightObj.firebaseKey}`}>
+              <Button className="cardBtn" style={{ marginTop: '20px' }}>
+                EDIT
+              </Button>
+            </Link>
+          )}
           <Button className="cardBtnDelete" style={{ marginTop: '20px', marginLeft: '25px' }}>
             DELETE
           </Button>
@@ -32,6 +38,6 @@ SightingsCard.propTypes = {
     state: PropTypes.string.isRequired,
     image: PropTypes.string.isRequired,
     firebaseKey: PropTypes.string.isRequired,
+    uid: PropTypes.string,
   }),
-  onEdit: PropTypes.func.isRequired,
 };
