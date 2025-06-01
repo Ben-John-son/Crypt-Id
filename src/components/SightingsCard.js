@@ -3,9 +3,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { useAuth } from '../utils/context/authContext';
+import { deleteSighting } from '../api/sightingsApi';
 
-export default function SightingsCard({ sightObj }) {
+export default function SightingsCard({ sightObj, onUpdate }) {
   const { user } = useAuth();
+  const deleteThisSighting = () => {
+    if (window.confirm(`Delete sighting?`)) {
+      deleteSighting(sightObj.firebaseKey).then(() => onUpdate());
+    }
+  };
 
   return (
     <div>
@@ -23,7 +29,7 @@ export default function SightingsCard({ sightObj }) {
               </Button>
             </Link>
           )}
-          <Button className="cardBtnDelete" style={{ marginTop: '20px', marginLeft: '25px' }}>
+          <Button className="cardBtnDelete" onClick={deleteThisSighting} style={{ marginTop: '20px', marginLeft: '25px' }}>
             DELETE
           </Button>
         </Card.Body>
@@ -40,4 +46,5 @@ SightingsCard.propTypes = {
     firebaseKey: PropTypes.string.isRequired,
     uid: PropTypes.string,
   }),
+  onUpdate: PropTypes.func.isRequired,
 };

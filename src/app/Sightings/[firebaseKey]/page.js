@@ -90,8 +90,12 @@ export default function SightingsByCryptid({ params, obj = initialState }) {
   //  const router = useRouter();
   const { user } = useAuth();
 
-  useEffect(() => {
+  const getAllSightings = () => {
     getCryptidSightings(firebaseKey).then(setSightings);
+  };
+
+  useEffect(() => {
+    getAllSightings();
   }, [firebaseKey]);
 
   const handleShow = (sighting = null) => {
@@ -141,7 +145,7 @@ export default function SightingsByCryptid({ params, obj = initialState }) {
       </Link>
 
       <div className="sightingsCards" style={{ marginTop: '2%', display: 'flex', flexDirection: 'row', justifyContent: 'center', justifyItems: 'center', flexWrap: 'wrap', gap: '2%', marginBottom: '2%' }}>
-        {sightings.length ? sightings.map((sighting) => <SightingsCard key={sighting.firebaseKey} sightObj={sighting} onEdit={handleShow} />) : <h2>No sightings added yet</h2>}
+        {sightings.length ? sightings.map((sighting) => <SightingsCard key={sighting.firebaseKey} sightObj={sighting} onEdit={handleShow} onUpdate={getAllSightings} />) : <h2>No sightings added yet</h2>}
       </div>
 
       <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
