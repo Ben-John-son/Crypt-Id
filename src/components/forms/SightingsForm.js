@@ -48,7 +48,7 @@ export default function SightingsForm({ obj = initialState, params }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (obj.firebaseKey) {
-      updateSighting(formInput).then(() => router.push(`/Sightings/${obj.firebaseKey}`));
+      updateSighting(formInput).then(() => router.back());
     } else {
       const payload = { ...formInput, uid: user.uid };
       createSighting(payload).then(({ name }) => {
