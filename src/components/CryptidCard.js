@@ -11,7 +11,11 @@ export default function CryptidCard({ cryptObj, onUpdate }) {
 
   const deleteThisCryptid = () => {
     if (window.confirm(`Delete ${cryptObj.cryptidName}?`)) {
-      deleteCryptidSightings(cryptObj.firebaseKey).then(() => onUpdate());
+      deleteCryptidSightings(cryptObj.firebaseKey)
+        .then(() => onUpdate())
+        .then(() => {
+          window.location.reload();
+        });
     }
   };
   return (
