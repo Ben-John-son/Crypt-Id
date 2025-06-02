@@ -18,6 +18,7 @@ const initialState = {
   image: '',
   description: '',
   states: [],
+  aggressive: false,
 };
 
 export default function CryptidForm({ obj = initialState }) {
@@ -84,6 +85,7 @@ export default function CryptidForm({ obj = initialState }) {
   ];
 
   const [formInput, setFormInput] = useState(initialState);
+  const [isChecked, setChecked] = useState(false);
   const router = useRouter();
   const { user } = useAuth();
 
@@ -126,6 +128,16 @@ export default function CryptidForm({ obj = initialState }) {
       });
     }
   };
+
+  const handleCheck = () => {
+    const newChecked = !isChecked;
+    setChecked(newChecked);
+    setFormInput((prevState) => ({
+      ...prevState,
+      aggressive: newChecked,
+    }));
+  };
+
   const labelStyle = {
     color: 'rgb(76 204 106)',
     fontWeight: 'bold',
@@ -208,7 +220,8 @@ export default function CryptidForm({ obj = initialState }) {
           }}
         />
       </Form.Group>
-
+      <Form.Check type="checkbox" aria-label="option 1" label="Aggressive" style={{ height: '10px', width: '30px' }} value={formInput.aggressive} checked={isChecked} onChange={handleCheck} />
+      <br />
       <Button variant="primary" type="submit" style={buttonStyle}>
         Submit
       </Button>

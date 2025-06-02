@@ -24,6 +24,9 @@ export default function Cryptids() {
     if (event.target.value === 'allCryptids') {
       setShowCards(cryptids.map((cryptid) => <CryptidCard key={cryptid.firebaseKey} cryptObj={cryptid} onUpdate={getAllCreatures} />));
     }
+    if (event.target.id === 'aggressive') {
+      setShowCards(cryptids.filter((cryptid) => cryptid.aggressive === true).map((crypt) => <CryptidCard key={crypt.firebaseKey} cryptObj={crypt} onUpdate={getAllCreatures} />));
+    }
   };
 
   // const handleTerrestrial = () => {
@@ -51,7 +54,9 @@ export default function Cryptids() {
               </Dropdown.Toggle>
 
               <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Terrestrial</Dropdown.Item>
+                <Dropdown.Item id="aggressive" value="aggressive" onClick={handleClick}>
+                  Aggressive
+                </Dropdown.Item>
                 <Dropdown.Item href="#/action-2">Extraterrestrial</Dropdown.Item>
                 <Dropdown.Item href="/Map">Map</Dropdown.Item>
               </Dropdown.Menu>
