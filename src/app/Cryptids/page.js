@@ -57,7 +57,7 @@ export default function Cryptids() {
                 <Dropdown.Item id="aggressive" value="aggressive" onClick={handleClick}>
                   Aggressive
                 </Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Extraterrestrial</Dropdown.Item>
+                {/* <Dropdown.Item href="#/action-2">Extraterrestrial</Dropdown.Item> */}
                 <Dropdown.Item href="/Map">Map</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
