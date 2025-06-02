@@ -120,4 +120,17 @@ const cryptidsByState = (state) =>
       .catch(reject);
   });
 
-export { getCryptids, createCryptid, deleteCryptid, getSingleCryptid, updateCryptid, userCryptids, getCryptidSightings, cryptidsByState };
+const updateCryptidStates = (cryptidKey, stateName) =>
+  fetch(`${endpoint}/cryptids/${cryptidKey}/states.json`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ [stateName]: true }),
+  })
+    .then((res) => res.json())
+    .catch((error) => {
+      console.error('Error updating cryptid states:', error);
+    });
+
+export { getCryptids, createCryptid, deleteCryptid, getSingleCryptid, updateCryptid, userCryptids, getCryptidSightings, cryptidsByState, updateCryptidStates };
