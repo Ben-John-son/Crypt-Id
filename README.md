@@ -19,6 +19,9 @@ Languages and Tools:
 - D3
 - Git
 
+Contributors:
+- Ben Johnson -- https://github.com/Ben-John-son
+
 
 Links:
 
