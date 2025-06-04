@@ -34,9 +34,9 @@ export default function ContributionsPage() {
   };
   return (
     <>
-      <div className="relative w-full" style={{ height: 'calc(100vh - 60px)', paddingTop: '10px' }}>
+      <div className="relative w-full" style={{ height: 'calc(100vh - 60px)', paddingTop: '10px', gap: '20px' }}>
         <Image src="/hallOfFame.jpg" alt="Bigfoot" fill style={{ objectFit: 'cover', zIndex: -1 }} priority />
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', justifyItems: 'center', gap: '20px' }}>
           <Button name="cryptids" value="cryptids" onClick={handleClick}>
             My Cryptids
           </Button>
@@ -44,7 +44,7 @@ export default function ContributionsPage() {
             My Sightings
           </Button>
         </div>
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', gap: '2%' }}>{things}</div>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', gap: '2%', marginTop: '2%' }}>{things}</div>
       </div>
       <footer style={{ display: 'flex', flexDirection: 'row', gap: '20px' }}>
         <Link href="/" className="nav-link">

@@ -1,8 +1,9 @@
 import React from 'react';
-import Card from 'react-bootstrap/Card';
+// import Card from 'react-bootstrap/Card';
 import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Link from 'next/link';
+import { Card } from 'react-bootstrap';
 import { useAuth } from '../utils/context/authContext';
 import deleteCryptidSightings from '../api/mergedData';
 
@@ -11,25 +12,19 @@ export default function CryptidCard({ cryptObj, onUpdate }) {
 
   const deleteThisCryptid = () => {
     if (window.confirm(`Delete ${cryptObj.cryptidName}?`)) {
-      deleteCryptidSightings(cryptObj.firebaseKey)
-        .then(() => onUpdate())
-        .then(() => {
-          window.location.reload();
-        });
+      deleteCryptidSightings(cryptObj.firebaseKey).then(() => onUpdate());
     }
   };
   return (
-    <Card style={{ width: '20rem', backgroundColor: 'rgb(76 204 106) ', height: '65vh' }}>
-      <Card.Img variant="top" src={cryptObj.image} style={{ height: '35%' }} />
+    <Card style={{ display: 'flex', width: '20rem', backgroundColor: 'rgb(76 204 106) ', height: '65vh', boxShadow: '-14px 19px 24px -11px rgba(220,88,40,0.61)', WebkitBoxShadow: ' -14px 19px 24px -11px rgba(220,88,40,0.61)', MozBoxShadow: ' -14px 19px 24px -11px rgba(220,88,40,0.61)' }} horizontal>
+      <Card.Img variant="top" src={cryptObj.image} style={{ display: 'flex', flexBasis: '', height: '35%' }} />
       <Card.Body>
         <Card.Title style={{ fontFamily: 'courier', color: 'rgb(220, 88, 40)', fontWeight: 'bold' }}>{cryptObj.cryptidName}</Card.Title>
         <Card.Text style={{ fontSize: '11px', fontFamily: 'courier' }}>{cryptObj.description}</Card.Text>
-        <Card.Link href="#" style={{ fontFamily: 'courier', fontWeight: 'bold', color: 'rgb(220, 88, 40)' }}>
-          Mythos
-        </Card.Link>
-        <Card.Link href={`/Sightings/${cryptObj.firebaseKey}`} style={{ fontFamily: 'courier', fontWeight: 'bold', color: 'rgb(220, 88, 40)' }} passHref>
+
+        <Link href={`/Sightings/${cryptObj.firebaseKey}`} style={{ fontFamily: 'courier', fontWeight: 'bold', color: 'rgb(220, 88, 40)' }} passHref>
           Sightings
-        </Card.Link>
+        </Link>
         <br />
         {cryptObj.aggressive === true && (
           <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginTop: '2%' }}>

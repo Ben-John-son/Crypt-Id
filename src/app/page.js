@@ -47,7 +47,7 @@ function Home() {
                   <br />
                   {sighting.state}
                 </Carousel.Caption>
-                <img className="d-block w-100" src={sighting.image} alt="slide" style={{ height: '75%', width: '500px !important' }} />
+                <img className="d-block w-100" src={sighting.image} alt="slide" style={{ height: '75%', width: '500px !important', maxHeight: '300px' }} />
               </Carousel.Item>
             ))}
           </Carousel>
