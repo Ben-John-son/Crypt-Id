@@ -38,4 +38,9 @@ Github:
 - Loom -- https://www.loom.com/share/df5ffcb1aa1f45bfa258db2e387ad9c1
 
 Screenshot of app:
-![Alt text]('/Screenshot (103).png')
+
+
+![Screenshot (103)](https://github.com/user-attachments/assets/eef52afb-01ec-4b69-9776-8f5c91eacd61)
+
+![Screenshot (104)](https://github.com/user-attachments/assets/7906cd3d-afb3-4b56-9207-7373ac988c2c)
+![Screenshot (106)](https://github.com/user-attachments/assets/199687d6-6cc1-4219-9d56-5c41b1128335)
