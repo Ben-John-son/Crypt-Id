@@ -21,7 +21,6 @@ Languages and Tools:
 
 
 Links:
-- Firebase -- https://console.firebase.google.com/project/crypt-id/database/crypt-id-default-rtdb/data/~2F
 
 - ERD -- https://lucid.app/lucidchart/190a3b42-abbf-4e5c-a7ea-b57cb4a2da07/edit?page=0_0&invitationId=inv_1e50677f-264a-40bc-a952-7c60e2db90b5#
 
@@ -35,7 +34,6 @@ Github:
 
 - Netlify -- https://crypt-id.netlify.app/
 
-- Loom -- https://www.loom.com/share/df5ffcb1aa1f45bfa258db2e387ad9c1
 
 Screenshot of app:
 
