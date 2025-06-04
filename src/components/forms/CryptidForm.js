@@ -18,7 +18,7 @@ const initialState = {
   image: '',
   description: '',
   states: [],
-  aggressive: false,
+  aggressive: Boolean,
 };
 
 export default function CryptidForm({ obj = initialState }) {
@@ -132,10 +132,10 @@ export default function CryptidForm({ obj = initialState }) {
   const handleCheck = () => {
     const newChecked = !isChecked;
     setChecked(newChecked);
-    setFormInput((prevState) => ({
-      ...prevState,
-      aggressive: newChecked,
-    }));
+    // setFormInput((prevState) => ({
+    //   ...prevState,
+    //   aggressive: newChecked,
+    // }));
   };
 
   const labelStyle = {
@@ -205,7 +205,7 @@ export default function CryptidForm({ obj = initialState }) {
             value: state,
             label: state,
           }))}
-          styles={{
+          style={{
             control: (provided) => ({
               ...provided,
               backgroundColor: 'rgb(220, 88, 40)',

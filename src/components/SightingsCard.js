@@ -15,7 +15,7 @@ export default function SightingsCard({ sightObj, onUpdate }) {
 
   return (
     <div>
-      <Card style={{ width: '20rem', backgroundColor: 'black ', height: '65vh', border: '2px solid rgb(220, 88, 40)', marginBottom: '2rem' }}>
+      <Card style={{ width: '20rem', backgroundColor: 'black ', height: '65vh', border: '2px solid rgb(220, 88, 40)', marginBottom: '2rem', boxShadow: '-14px 19px 24px -11px rgba(76,204,106,0.61)', WebkitBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)', MozBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)' }}>
         <Card.Img variant="top" src={sightObj.image} style={{ height: '35%' }} />
         <Card.Body>
           <Card.Text style={{ fontSize: '11px', fontFamily: 'courier', color: 'rgb(76 204 106)' }}>{sightObj.description}</Card.Text>
@@ -29,9 +29,11 @@ export default function SightingsCard({ sightObj, onUpdate }) {
               </Button>
             </Link>
           )}
-          <Button className="cardBtnDelete" onClick={deleteThisSighting} style={{ marginTop: '20px', marginLeft: '25px' }}>
-            DELETE
-          </Button>
+          {user.uid === sightObj.uid && (
+            <Button className="cardBtnDelete" onClick={deleteThisSighting} style={{ marginTop: '20px', marginLeft: '25px' }}>
+              DELETE
+            </Button>
+          )}
         </Card.Body>
       </Card>
     </div>
