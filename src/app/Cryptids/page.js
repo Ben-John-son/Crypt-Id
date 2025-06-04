@@ -35,7 +35,7 @@ export default function Cryptids() {
 
   return (
     <>
-      <div className="relative w-full" style={{ height: '100%' }}>
+      <div style={{ height: '100%', width: '1200px' }}>
         <Image src="/werewolfSilhouette.png" alt="Bigfoot" fill style={{ objectFit: 'cover', zIndex: -1, position: 'absolute' }} priority />
         <div className="twoContainers" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
           <div className="allCryptids" style={{ width: '400px', height: '300px', backgroundColor: 'rgb(76 204 106)', opacity: '.6', color: 'rgb(76 204 106)', marginTop: '5%', borderRadius: '2%' }}>
@@ -67,7 +67,7 @@ export default function Cryptids() {
         <Link href="/Cryptids/new" passHref>
           <Button style={{ marginLeft: '50%', marginTop: '8%' }}>Add Cryptid</Button>
         </Link>
-        <div className="displayCryptids" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', gap: '40px', padding: '40px', marginTop: '50px', width: '100%' }}>
+        <div className="displayCryptids" style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', justifyItems: 'center', flexWrap: 'wrap', gap: '60px', padding: '10px', marginTop: '50px' }}>
           {filtered.map((cryptid) => (
             <CryptidCard key={cryptid.firebaseKey} cryptObj={cryptid} onUpdate={getAllCreatures} />
           ))}
