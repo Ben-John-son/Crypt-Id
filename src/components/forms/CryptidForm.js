@@ -95,6 +95,7 @@ export default function CryptidForm({ obj = initialState }) {
     const normalizedStates = obj?.states ? (Array.isArray(obj.states) ? obj.states : Object.keys(obj.states)) : [];
 
     setFormInput({ ...initialState, ...obj, states: normalizedStates });
+    setChecked(!!obj.aggressive);
   }, [obj]);
 
   const handleChange = (e) => {
@@ -132,10 +133,10 @@ export default function CryptidForm({ obj = initialState }) {
   const handleCheck = () => {
     const newChecked = !isChecked;
     setChecked(newChecked);
-    // setFormInput((prevState) => ({
-    //   ...prevState,
-    //   aggressive: newChecked,
-    // }));
+    setFormInput((prevState) => ({
+      ...prevState,
+      aggressive: newChecked,
+    }));
   };
 
   const labelStyle = {
@@ -220,7 +221,7 @@ export default function CryptidForm({ obj = initialState }) {
           }}
         />
       </Form.Group>
-      <Form.Check type="checkbox" aria-label="option 1" label="Aggressive" style={{ height: '10px', width: '30px' }} value={formInput.aggressive} checked={isChecked} onChange={handleCheck} />
+      <Form.Check type="checkbox" aria-label="option 1" label="Aggressive" style={{ height: '15px', width: '30px' }} value={formInput.aggressive} checked={isChecked} onChange={handleCheck} />
       <br />
       <Button variant="primary" type="submit" style={buttonStyle}>
         Submit
