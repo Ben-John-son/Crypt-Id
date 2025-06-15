@@ -22,7 +22,7 @@ export default function NewSightingsPage({ params }) {
 
   return (
     <div>
-      <Image src="/werewolfSilhouette.png" alt="Bigfoot" fill style={{ objectFit: 'cover', zIndex: -1, position: 'absolute' }} priority />
+      <Image src="/formImageWoods.jpg" alt="Bigfoot" fill style={{ objectFit: 'cover', zIndex: -1, position: 'absolute' }} priority />
       <h2 style={{ textAlign: 'center', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '45px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier', marginTop: '2%' }}>{cryptids.cryptidName}</h2>
       <div style={{ marginTop: '3%' }}>
         <SightingsForm params={firebaseKey} />

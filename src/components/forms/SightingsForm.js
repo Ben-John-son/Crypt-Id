@@ -12,8 +12,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useRouter } from 'next/navigation';
 import { FormGroup } from 'react-bootstrap';
 import { useAuth } from '../../utils/context/authContext'; // ✅ named import
-import { createSighting, updateSighting } from '../../api/sightingsApi';
-import { updateCryptidStates } from '../../api/cryptidApi';
+import { checkStatesOfSightings, createSighting, updateSighting } from '../../api/sightingsApi';
+import { removeCryptidState, updateCryptidStates } from '../../api/cryptidApi';
 
 const initialState = {
   city: '',
@@ -45,10 +45,21 @@ export default function SightingsForm({ obj = initialState, params }) {
   //   setFormInput((prev) => ({ ...prev, states: selectedStates }));
   // }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (obj.firebaseKey) {
-      updateSighting(formInput).then(() => router.back());
+      await updateSighting(formInput);
+      await updateCryptidStates(obj.cryptidKey, formInput.state);
+
+      if (obj.state !== formInput.state) {
+        const stillUsed = await checkStatesOfSightings(obj.cryptidKey, obj.state);
+        if (!stillUsed) {
+          await removeCryptidState(obj.cryptidKey, obj.state);
+        }
+      }
+
+      router.back();
     } else {
       const payload = { ...formInput, uid: user.uid };
       createSighting(payload).then(({ name }) => {
@@ -67,11 +78,11 @@ export default function SightingsForm({ obj = initialState, params }) {
       <Row className="mb-3">
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>City</Form.Label>
-          <Form.Control onChange={handleChange} type="text" placeholder="" name="city" value={formInput.city} style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', opacity: '.8', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }} />
+          <Form.Control onChange={handleChange} type="text" placeholder="" name="city" value={formInput.city} style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', opacity: '.8', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier', boxShadow: '-14px 19px 24px -11px rgba(76,204,106,0.61)', WebkitBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)', MozBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)' }} />
         </Form.Group>
 
         <Form.Group as={Col} controlId="formGridPassword">
-          <Form.Label value={formInput.state} style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>
+          <Form.Label value={formInput.state} style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier', boxShadow: '-14px 19px 24px -11px rgba(76,204,106,0.61)', WebkitBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)', MozBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)' }}>
             State
           </Form.Label>
           <FormGroup>
@@ -104,12 +115,12 @@ export default function SightingsForm({ obj = initialState, params }) {
 
       <Form.Group className="mb-3" controlId="formGridAddress1">
         <Form.Label style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>Sighting Description</Form.Label>
-        <Form.Control onChange={handleChange} name="description" value={formInput.description} placeholder="It was..." style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', opacity: '.8', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }} />
+        <Form.Control onChange={handleChange} name="description" value={formInput.description} placeholder="It was..." style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', opacity: '.8', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier', boxShadow: '-14px 19px 24px -11px rgba(76,204,106,0.61)', WebkitBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)', MozBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)' }} />
       </Form.Group>
 
       <Form.Group as={Col} controlId="formGridPassword">
         <Form.Label style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>Photo Evidence</Form.Label>
-        <Form.Control onChange={handleChange} type="text" placeholder="It looked like..." name="image" value={formInput.image} style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', opacity: '.8', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }} />
+        <Form.Control onChange={handleChange} type="text" placeholder="It looked like..." name="image" value={formInput.image} style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', opacity: '.8', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier', boxShadow: '-14px 19px 24px -11px rgba(76,204,106,0.61)', WebkitBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)', MozBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)' }} />
       </Form.Group>
 
       {/* <Row>
@@ -117,7 +128,7 @@ export default function SightingsForm({ obj = initialState, params }) {
           <Form.Check type="checkbox" label="Check me out" />
         </Form.Group>
       </Row> */}
-      <Button variant="primary" type="submit" style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier', marginTop: '2%' }}>
+      <Button variant="primary" type="submit" style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier', marginTop: '2%', boxShadow: '-14px 19px 24px -11px rgba(76,204,106,0.61)', WebkitBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)', MozBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)' }}>
         Submit
       </Button>
     </Form>

@@ -5,7 +5,7 @@ import { Modal, Button, Image, FormGroup, Form, Row, Col } from 'react-bootstrap
 // import { useRouter } from 'next/navigation';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
-import { getCryptidSightings } from '../../../api/cryptidApi';
+import { getCryptidSightings, getSingleCryptid } from '../../../api/cryptidApi';
 import { createSighting, updateSighting } from '../../../api/sightingsApi';
 // import SightingsForm from '../../../components/forms/SightingsForm';
 import SightingsCard from '../../../components/SightingsCard';
@@ -87,12 +87,17 @@ export default function SightingsByCryptid({ params, obj = initialState }) {
   const { firebaseKey } = params;
   const [formInput, setFormInput] = useState(obj);
   const [editMode, setEditMode] = useState(false);
+  const [cryptid, setCryptid] = useState([]);
   //  const router = useRouter();
   const { user } = useAuth();
 
   const getAllSightings = () => {
     getCryptidSightings(firebaseKey).then(setSightings);
   };
+
+  useEffect(() => {
+    getSingleCryptid(firebaseKey).then(setCryptid);
+  }, [firebaseKey]);
 
   useEffect(() => {
     getAllSightings();
@@ -138,14 +143,13 @@ export default function SightingsByCryptid({ params, obj = initialState }) {
   return (
     <div style={{ width: '100%', margin: '0px', padding: '1px', display: 'flex', flexDirection: 'column', alignContent: 'center', alignItems: 'center' }}>
       <Image src="/sightingsPage2.png" alt="Bigfoot" fill style={{ objectFit: 'cover', zIndex: -1, position: 'absolute' }} priority />
-
-      <h1 style={{ fontFamily: 'courier', color: 'rgb(220, 88, 40)', textAlign: 'center', marginTop: '5%', fontWeight: 'bold' }}>Sightings</h1>
+      <h1 style={{ fontFamily: 'courier', color: 'rgb(220, 88, 40)', textAlign: 'center', marginTop: '5%', fontWeight: 'bold', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none' }}>{cryptid.cryptidName} Sightings</h1>
       <Link href={`/Sightings/new/${firebaseKey}`} passHref>
         <Button variant="info">Add Sighting</Button>
       </Link>
 
       <div className="sightingsCards" style={{ marginTop: '2%', display: 'flex', flexDirection: 'row', justifyContent: 'center', justifyItems: 'center', flexWrap: 'wrap', gap: '2%', marginBottom: '2%' }}>
-        {sightings.length ? sightings.map((sighting) => <SightingsCard key={sighting.firebaseKey} sightObj={sighting} onEdit={handleShow} onUpdate={getAllSightings} />) : <h2>No sightings added yet</h2>}
+        {sightings.length > 0 ? sightings.map((sighting) => <SightingsCard key={sighting.firebaseKey} sightObj={sighting} onEdit={handleShow} onUpdate={getAllSightings} />) : <h2 style={{ color: 'rgb(220, 88, 40)', fontFamily: 'courier', fontSize: '30px', fontWeight: 'bold', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black' }}>No sightings added yet</h2>}
       </div>
 
       <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>

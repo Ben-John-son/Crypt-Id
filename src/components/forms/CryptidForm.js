@@ -19,6 +19,8 @@ const initialState = {
   description: '',
   states: [],
   aggressive: Boolean,
+  otherStates: {},
+  votes: 0,
 };
 
 export default function CryptidForm({ obj = initialState }) {
@@ -116,7 +118,7 @@ export default function CryptidForm({ obj = initialState }) {
 
     const stateObj = Object.fromEntries(stateArray.map((state) => [state, true]));
 
-    const payload = { ...formInput, states: stateObj };
+    const payload = { ...formInput, states: stateObj, otherStates: stateObj };
 
     if (obj.firebaseKey) {
       updateCryptid(payload).then(() => router.push('/Cryptids'));
@@ -160,6 +162,9 @@ export default function CryptidForm({ obj = initialState }) {
     WebkitTextStrokeColor: 'black',
     textDecoration: 'none',
     fontFamily: 'courier',
+    boxShadow: '-14px 19px 24px -11px rgba(76,204,106,0.61)',
+    WebkitBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)',
+    MozBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)',
   };
 
   const buttonStyle = {

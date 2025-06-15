@@ -87,6 +87,24 @@ const updateSighting = (payload) =>
       .catch(reject);
   });
 
+const checkStatesOfSightings = (cryptidKey, stateToCheck) =>
+  new Promise((resolve, reject) => {
+    fetch(`${endpoint}/sightings.json?orderBy="cryptidKey"&equalTo="${cryptidKey}"`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data) {
+          resolve(false);
+        } else {
+          const stillUsed = Object.values(data).some((sighting) => sighting.state === stateToCheck);
+          resolve(stillUsed);
+        }
+      })
+      .catch((error) => {
+        console.error('Error checking if state is still used:', error);
+        reject(error);
+      });
+  });
+
 // const getBooksByAuthor = (firebaseKey) =>
 //   new Promise((resolve, reject) => {
 //     fetch(`${endpoint}/books.json?orderBy="author_id"&equalTo="${firebaseKey}"`, {
@@ -116,4 +134,4 @@ const updateSighting = (payload) =>
 //       .catch(reject);
 //   });
 
-export { getSightings, createSighting, deleteSighting, updateSighting, getSingleSighting, userSightings };
+export { getSightings, createSighting, deleteSighting, updateSighting, getSingleSighting, userSightings, checkStatesOfSightings };
