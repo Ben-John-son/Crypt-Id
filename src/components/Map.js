@@ -58,6 +58,23 @@ export default function UsMap({ onStateClick }) {
         .attr('stroke-linejoin', 'round')
         .attr('d', path(mesh(us, us.objects.states, (a, b) => a !== b)));
 
+      // Add state labels
+      g.append('g')
+        .attr('class', 'state-labels')
+        .selectAll('text')
+        .data(stateFeatures)
+        .join('text')
+        .attr('transform', (d) => {
+          const [x, y] = path.centroid(d);
+          return `translate(${x},${y})`;
+        })
+        .attr('text-anchor', 'middle')
+        .attr('font-size', 10)
+        .attr('fill', 'rgb(220, 88, 40)')
+        .attr('font-family', 'courier')
+        .attr('pointer-events', 'none')
+        .text((d) => d.properties.name);
+
       // svg.on('click', () => {
       //   states.transition().style('fill', '#444');
       //   svg

@@ -46,19 +46,21 @@ export default function Cryptids() {
               </Button>
             </div>
           </div>
-          <div style={{ width: '400px', height: '300px', backgroundColor: 'rgb(220, 88, 40)', opacity: '.6', color: 'rrgb(76 204 106)', marginTop: '5%', marginLeft: '10%', borderRadius: '2%', border: '3px solid grey' }}>
-            <h2 style={{ textAlign: 'center', padding: '20px', fontFamily: 'courier', fontWeight: 'bold', color: 'rgb(76 204 106)', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black' }}>Want to view cryptids by type or location?</h2>
-            <Dropdown style={{ marginLeft: '35%', marginTop: '29%' }}>
+          <div style={{ width: '400px', height: '300px', backgroundColor: 'rgb(220, 88, 40)', opacity: '.6', color: 'rgb(76 204 106)', marginTop: '5%', marginLeft: '10%', borderRadius: '2%', border: '3px solid grey' }}>
+            <h2 style={{ textAlign: 'center', padding: '20px', fontFamily: 'courier', fontWeight: 'bold', color: 'rgb(76 204 106)', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', marginTop: '50px' }}>Want to view cryptids by type or location?</h2>
+            <Dropdown style={{ marginLeft: '35%', marginTop: '19%' }}>
               <Dropdown.Toggle variant="success" id="dropdown-basic" style={{ backgroundColor: 'rgb(76 204 106)', color: 'rgb(220, 88, 40)', fontFamily: 'courier', fontWeight: 'bold' }}>
                 Options
               </Dropdown.Toggle>
 
-              <Dropdown.Menu>
-                <Dropdown.Item id="aggressive" value="aggressive" onClick={handleClick}>
+              <Dropdown.Menu style={{ backgroundColor: 'black', border: '1px solid rgb(76 204 106)' }}>
+                <Dropdown.Item className="dropSelect" id="aggressive" value="aggressive" onClick={handleClick} style={{ color: 'rgb(220, 88, 40)' }}>
                   Aggressive
                 </Dropdown.Item>
                 {/* <Dropdown.Item href="#/action-2">Extraterrestrial</Dropdown.Item> */}
-                <Link href="/Map">Map</Link>
+                <Link className="dropSelect" href="/Map" style={{ color: 'rgb(220, 88, 40)', marginLeft: '10%' }}>
+                  Map
+                </Link>
               </Dropdown.Menu>
             </Dropdown>
           </div>

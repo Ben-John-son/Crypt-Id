@@ -26,8 +26,8 @@ function Home() {
     <>
       <div className="relative w-full" style={{ height: 'calc(100vh - 60px)', paddingTop: '10px' }}>
         <Image src="/1000001063.jpg" alt="Bigfoot" fill style={{ objectFit: 'cover', zIndex: -1 }} priority />
-        <div style={{ display: 'flex', flexDirection: 'column', alignContent: 'center', alignItems: 'center', width: '410px', marginTop: '2%', fontFamily: 'courier', border: 'rgb(76 204 106) solid 2px', backgroundColor: 'rgb(93, 93, 93)', opacity: '.6', borderRadius: '2%' }}>
-          <h4 style={{ padding: '15px', marginLeft: '15px', marginRight: ' 15px', paddingRight: '20px', color: 'rgb(76 204 106)', fontWeight: 'bold' }}>Are you ready to explore the world of cryptozoology?</h4>
+        <div style={{ display: 'flex', flexDirection: 'column', alignContent: 'center', alignItems: 'center', width: '410px', marginTop: '4%', fontFamily: 'courier', border: 'rgb(76 204 106) solid 2px', backgroundColor: 'rgb(93, 93, 93)', opacity: '.6', borderRadius: '2%' }}>
+          <h4 style={{ textAlign: 'center', paddingLeft: '10px', paddingRight: '10px', color: 'rgb(76 204 106)', fontWeight: 'bold' }}>Are you ready to explore the world of cryptozoology?</h4>
           <Link href="/Cryptids" className="nav-linkOne" style={{ fontSize: '30px', color: 'orange', fontWeight: 'bold' }}>
             Explore
           </Link>
@@ -47,7 +47,7 @@ function Home() {
                   <br />
                   {sighting.state}
                 </Carousel.Caption>
-                <img className="d-block w-100" src={sighting.image} alt="slide" style={{ height: '75%', width: '500px !important', maxHeight: '300px' }} />
+                <img className="d-block w-100" src={sighting.image} alt="slide" style={{ height: '250px', minWidth: '300px', maxHeight: '300px' }} />
               </Carousel.Item>
             ))}
           </Carousel>
