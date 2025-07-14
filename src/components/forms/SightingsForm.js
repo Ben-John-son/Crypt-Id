@@ -20,6 +20,7 @@ const initialState = {
   image: '',
   description: '',
   state: '',
+  video: '',
 };
 
 export default function SightingsForm({ obj = initialState, params }) {
@@ -121,6 +122,11 @@ export default function SightingsForm({ obj = initialState, params }) {
       <Form.Group as={Col} controlId="formGridPassword">
         <Form.Label style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>Photo Evidence</Form.Label>
         <Form.Control onChange={handleChange} type="text" placeholder="It looked like..." name="image" value={formInput.image} style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', opacity: '.8', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier', boxShadow: '-14px 19px 24px -11px rgba(76,204,106,0.61)', WebkitBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)', MozBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)' }} />
+      </Form.Group>
+
+      <Form.Group as={Col} controlId="formGridPassword">
+        <Form.Label style={{ color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier' }}>Video Evidence</Form.Label>
+        <Form.Control onChange={handleChange} type="text" placeholder="" name="video" value={formInput.video} style={{ backgroundColor: 'rgb(220, 88, 40)', border: 'none', opacity: '.8', color: 'rgb(76 204 106)', fontWeight: 'bold', fontSize: '25px', WebkitTextStroke: '1px', WebkitTextStrokeColor: 'black', textDecoration: 'none', fontFamily: 'courier', boxShadow: '-14px 19px 24px -11px rgba(76,204,106,0.61)', WebkitBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)', MozBoxShadow: ' -14px 19px 24px -11px rgba(76,204,106,0.61)' }} />
       </Form.Group>
 
       {/* <Row>
