@@ -29,7 +29,7 @@ function Home() {
 
   return (
     <>
-      <div className="relative w-full" style={{ height: 'calc(100vh - 60px)', paddingTop: '10px' }}>
+      <div className="explore-box" style={{ height: 'calc(100vh - 60px)', paddingTop: '10px' }}>
         <Image src="/1000001063.jpg" alt="Bigfoot" fill style={{ objectFit: 'cover', zIndex: -1 }} priority />
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '410px', marginTop: '4%', fontFamily: 'courier', border: 'rgb(76 204 106) solid 2px', backgroundColor: 'rgb(93, 93, 93)', opacity: '.6', borderRadius: '2%' }}>
           <h4 style={{ textAlign: 'center', padding: '0 10px', color: 'rgb(76 204 106)', fontWeight: 'bold' }}>Are you ready to explore the world of cryptozoology?</h4>

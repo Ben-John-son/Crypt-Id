@@ -697,3 +697,74 @@ BsArrowUpCircleFill {
     gap: 20px;
   }
 }
+
+
+@media (max-width: 768px) {
+  .cryptid-carousel {
+    max-width: 90% !important;
+    margin: 20px auto !important;
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+  }
+
+  .randomPics img {
+    width: 180px !important;
+    height: auto !important;
+    margin-left: 70% !important;
+    margin-top: 20% !important;
+  }
+
+  .nav-link,
+  .nav-linkOne {
+    font-size: 20px !important;
+  }
+
+  footer {
+    flex-direction: column !important;
+    align-items: center !important;
+    height: auto !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .cryptid-carousel {
+    max-width: 95% !important;
+    margin: 10px auto !important;
+  }
+
+  .randomPics img {
+    width: 140px !important;
+    margin-left: 50% !important;
+    margin-top: 25% !important;
+  }
+
+  .nav-link,
+  .nav-linkOne {
+    font-size: 18px !important;
+  }
+
+  footer {
+    gap: 10px !important;
+    margin: 5px !important;
+  }
+
+  .explore-box {
+    width: 90% !important;
+    margin-top: 8% !important;
+  }
+}
+
+
+.cryptid-carousel .carousel-item > div > div {
+  width: 90% !important;
+  margin: 0 auto !important;
+}
+
+.nav-link-custom {
+  transition: color 0.3s ease;
+}
+
+.nav-link-custom:hover {
+  color: purple !important;
+}
